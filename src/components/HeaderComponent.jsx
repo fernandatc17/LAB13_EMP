@@ -1,6 +1,17 @@
-import { NavLink } from "react-router-dom"
+import { useNavigate ,NavLink } from "react-router-dom";
+import { useContext } from "react";
+import { AppContext } from "../contexts/AppContext";
 
 function HeaderComponent() {
+
+    const { usuario, logout } = useContext(AppContext);
+    const navigate = useNavigate();
+
+    const handleLogout = () => {
+        logout();
+        navigate("/");
+    }
+
     return (
         <nav className="navbar navbar-expand-lg bg-body-tertiary">
             <div className="container-fluid">
@@ -21,9 +32,9 @@ function HeaderComponent() {
                         </li>
                     </ul>
                     <div>
-                        Bienvenido Jhon Due 
+                        <div>Bienvenido {usuario}</div>
                         <div className="text-end">
-                            <a href="/">Salir</a>
+                            <button onClick={handleLogout} className="btn btn-link">Salir</button>
                         </div> 
                     </div>
                 </div>

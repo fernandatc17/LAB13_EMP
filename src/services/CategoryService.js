@@ -16,17 +16,17 @@ export const createCategory = async (data) => {
 
 export const getCategoryById = async (id) => {
     const response = await axios.get(`${PREFIX_URL}${id}/`);
-    return response.data;
+    return response;
 };
 
 
 export const updateCategoryService = async (id, data) => {
     const response = await axios.put(`${PREFIX_URL}${id}/`, data);
-    return response.data;
+    return response;
 };
 
 
 export const deleteCategoryService = async (id) => {
     const response = await axios.delete(`${PREFIX_URL}${id}/`);
-    return response.data;
+    return response;
 };

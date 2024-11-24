@@ -1,22 +1,20 @@
 import { useState, useEffect } from "react";
 import { useNavigate, useParams, Link } from "react-router-dom";
-import axios from "axios";
 import HeaderComponent from "../../components/HeaderComponent";
+import { updateCategoryService , getCategoryById } from "../../services/CategoryService";
 
 const initData = {
     id: '',
     description: '',
 }
-
 function CategoryEditFormPage(){
     
-    const urlApi = 'http://localhost:8000/series/api/v1/categories/';
     const navigate = useNavigate();
     const { id } = useParams();
     const [data, setData] = useState(initData);
 
     const setDataForm = async () => {
-        const resp = await axios.get(`${urlApi}${id}/`);
+        const resp = await getCategoryById(id);
         setData(resp.data);
     }
 
@@ -27,8 +25,13 @@ function CategoryEditFormPage(){
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        await axios.put(`${urlApi}${id}/`, data);
-        navigate("/categories");
+        try {
+            await updateCategoryService(data.id, data);
+            console.log('Enviando', data);
+            navigate('/categories');
+        } catch (error) {
+            console.error(error);
+        }
     };
 
     useEffect(()=>{
